@@ -1,0 +1,101 @@
+abstract class Piece {
+  
+  public final int colour;
+  
+  Piece(boolean c) {
+    colour = c ? WHITE : BLACK;
+  }
+  abstract int id();
+  abstract int value();
+  
+  //print sprite from sprite sheet
+  abstract void print(int x, int y);
+  
+  //check legality of move
+  abstract boolean checkMove(int toX, int toY);
+  
+}
+
+class NoPiece extends Piece {
+  NoPiece() { super(false); }
+  int id() { return -1; }
+  int value() { return 0; }
+  
+  void print(int x, int y) {}
+  
+  boolean checkMove(int toX, int toY) {
+    return false;
+  }
+}
+
+class Pawn extends Piece {
+  Pawn(boolean c) { super(c); }
+  int id() { return 1; }
+  int value() { return 1; }
+  
+  void print(int x, int y) {}
+  
+  boolean checkMove(int toX, int toY) {
+    return true;
+  }
+}
+
+class Knight extends Piece {
+  Knight(boolean c) { super(c); }
+  int id() { return 2; }
+  int value() { return 3; }
+  
+  void print(int x, int y) {}
+  
+  boolean checkMove(int toX, int toY) {
+    return true;
+  }
+}
+
+class Bishop extends Piece {
+  Bishop(boolean c) { super(c); }
+  int id() { return 3; }
+  int value() { return 3; }
+  
+  void print(int x, int y) {}
+  
+  boolean checkMove(int toX, int toY) {
+    return true;
+  }
+}
+
+class Rook extends Piece {
+  Rook(boolean c) { super(c); }
+  int id() { return 4; }
+  int value() { return 5; }
+  
+  void print(int x, int y) {}
+  
+  boolean checkMove(int toX, int toY) {
+    return true;
+  }
+}
+
+class Queen extends Piece {
+  Queen(boolean c) { super(c); }
+  int id() { return 5; }
+  int value() { return 9; }
+  
+  void print(int x, int y) {}
+  
+  boolean checkMove(int toX, int toY) {
+    return true;
+  }
+}
+
+class King extends Piece {
+  King(boolean c) { super(c); }
+  int id() { return 6; }
+  int value() { return 100; }
+  
+  void print(int x, int y) {}
+  
+  boolean checkMove(int toX, int toY) {
+    return true;
+  }
+}

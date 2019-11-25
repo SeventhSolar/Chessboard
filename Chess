@@ -1,0 +1,90 @@
+public static final int BLACK = 0;
+public static final int WHITE = 1;
+
+int playerColour = WHITE;
+
+Piece board[][] = new Piece[8][8];
+int select[] = {-10, -10};
+
+void setup() {
+  size(470, 470);
+  noLoop();
+  
+  playerColour = WHITE;
+  
+  for (int i = 0; i < 8; i++)
+    for (int j = 2; j < 6; j++)
+      board[i][j] = new NoPiece();
+  for (int i = 0; i < 8; i++) {
+    board[i][1] = new Pawn(false);
+    board[i][6] = new Pawn(true);
+  }
+  board[0][0] = new Rook(false);
+  board[1][0] = new Knight(false);
+  board[2][0] = new Bishop(false);
+  board[3][0] = new King(false);
+  board[4][0] = new Queen(false);
+  board[5][0] = new Bishop(false);
+  board[6][0] = new Knight(false);
+  board[7][0] = new Rook(false);
+  board[0][7] = new Rook(true);
+  board[1][7] = new Knight(true);
+  board[2][7] = new Bishop(true);
+  board[3][7] = new King(true);
+  board[4][7] = new Queen(true);
+  board[5][7] = new Bishop(true);
+  board[6][7] = new Knight(true);
+  board[7][7] = new Rook(true);
+}
+
+void draw() {
+  background(0);
+  
+  fill(240, 217, 181);
+  for (int x = 1; x <= 8; x++)
+    for (int y = 1; y <= 8; y++)
+      if ((x+y)%2 == 0)
+        rect(10 + x*45, 10 + y*45, 45, 45);
+  
+  fill(181, 136, 99);
+  for (int x = 1; x <= 8; x++)
+    for (int y = 1; y <= 8; y++)
+      if ((x+y)%2 == 1)
+        rect(10 + x*45, 10 + y*45, 45, 45);
+  
+  fill(205, 209, 106);
+  rect(55 + select[0]*45, 55 + select[1]*45, 45, 45);
+  
+  for (int x = 0; x < 8; x++)
+    for (int y = 0; y < 8; y++)
+      board[x][y].print(x, y);
+}
+
+void mouseClicked() {
+  if (mouseX < 55 || mouseX >= 415 || mouseY < 55 || mouseY >= 415) {
+    select[0] = -10;
+    select[1] = -10;
+    redraw();
+    return;
+  }
+  
+  int x = (mouseX - 55) / 45;
+  int y = (mouseY - 55) / 45;
+  
+  if (board[x][y].colour == playerColour) {
+    select[0] = x;
+    select[1] = y;
+  }
+  
+  else if (select[0] >= 0) {
+    int px = select[0];
+    int py = select[1];
+    if (board[px][py].checkMove(x, y)) {
+      board[x][y] = board[px][py];
+      board[px][py] = new NoPiece();
+    }
+  }
+  
+  redraw();
+  return;
+}
